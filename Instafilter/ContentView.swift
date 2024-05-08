@@ -21,7 +21,7 @@ struct ContentView: View {
     
     @State private var showingFilters = false
     
-//    @State private var beginImage: CIImage?
+    @State private var beginImage: CIImage?
     
     var body: some View {
         NavigationStack {
@@ -98,7 +98,7 @@ struct ContentView: View {
             guard let imageData = try await selectedImage?.loadTransferable(type: Data.self) else { return }
             guard let inputImage = UIImage(data: imageData) else { return }
             
-            let beginImage = CIImage(image: inputImage)
+            beginImage = CIImage(image: inputImage)
             currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
             applyProcessing()
         }
