@@ -45,31 +45,33 @@ struct ContentView: View {
                 
                 Spacer()
                 
-                HStack {
-                    Text("Intensity")
-                    Slider(value: $filterIntensity)
-                        .onChange(of: filterIntensity, applyProcessing)
+                if let selectedImage {
+                    HStack {
+                        Text("Intensity")
+                        Slider(value: $filterIntensity)
+                            .onChange(of: filterIntensity, applyProcessing)
+                        
+                    }
+                    .padding(.vertical)
                     
-                }
-                .padding(.vertical)
-                
-                HStack {
-                    Button("Change Filter", action: changeFilter)
-                        .confirmationDialog("Select a filter", isPresented: $showingFilters) {
-                            Button("Crystallize") { setFilter(CIFilter.crystallize()) }
-                            Button("Edges") { setFilter(CIFilter.edges()) }
-                            Button("Gaussian Blur") { setFilter(CIFilter.gaussianBlur()) }
-                            Button("Pixellate") { setFilter(CIFilter.pixellate()) }
-                            Button("Sepia Tone") { setFilter(CIFilter.sepiaTone()) }
-                            Button("Unsharp Mask") { setFilter(CIFilter.unsharpMask()) }
-                            Button("Vignette") { setFilter(CIFilter.vignette()) }
-                            Button("Cancel", role: .cancel) { }
+                    HStack {
+                        Button("Change Filter", action: changeFilter)
+                            .confirmationDialog("Select a filter", isPresented: $showingFilters) {
+                                Button("Crystallize") { setFilter(CIFilter.crystallize()) }
+                                Button("Edges") { setFilter(CIFilter.edges()) }
+                                Button("Gaussian Blur") { setFilter(CIFilter.gaussianBlur()) }
+                                Button("Pixellate") { setFilter(CIFilter.pixellate()) }
+                                Button("Sepia Tone") { setFilter(CIFilter.sepiaTone()) }
+                                Button("Unsharp Mask") { setFilter(CIFilter.unsharpMask()) }
+                                Button("Vignette") { setFilter(CIFilter.vignette()) }
+                                Button("Cancel", role: .cancel) { }
+                            }
+                        
+                        Spacer()
+                        
+                        if let processedImage {
+                            ShareLink(item: processedImage, preview: SharePreview("Instafilter image", image: processedImage))
                         }
-                    
-                    Spacer()
-                    
-                    if let processedImage {
-                        ShareLink(item: processedImage, preview: SharePreview("Instafilter image", image: processedImage))
                     }
                 }
             }
